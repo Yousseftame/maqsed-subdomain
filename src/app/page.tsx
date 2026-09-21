@@ -27,12 +27,10 @@ export default function Home() {
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className="bg-white rounded-[1.25rem] border-4 border-[#17C3B3] flex items-center justify-center relative z-10 px-3 py-1 overflow-hidden cursor-pointer"
       >
-        <Image 
+        <img 
           src="/lgoogg.jpeg" 
           alt="مقصد" 
-          width={200} 
-          height={80} 
-          className="object-cover w-auto h-20 md:h-24 scale-110"
+          className="object-contain w-auto h-20 md:h-24 scale-110"
         />
       </motion.div>
 

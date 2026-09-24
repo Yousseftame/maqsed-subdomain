@@ -13,7 +13,7 @@
   --color-maqsed-purple: #6A2B92;
 
   /* Fonts */
-  --font-cairo: var(--font-cairo), Arial, Helvetica, sans-serif;
+  --font-ibm-plex-sans-arabic: var(--font-ibm-plex-sans-arabic), Arial, Helvetica, sans-serif;
   --font-manrope: var(--font-manrope), Arial, Helvetica, sans-serif;
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);

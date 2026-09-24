@@ -1,31 +1,24 @@
 "use client";
 
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { DiaTextReveal } from "@/components/ui/dia-text-reveal";
+import { InterestListModal } from "@/components/InterestListModal";
 
 export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isInterestModalOpen, setIsInterestModalOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      // Set to 0.5 for half speed. You can adjust between 0.1 and 1.0.
-      videoRef.current.playbackRate = 0.5;
-    }
-  }, []);
-
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0D2B36] via-[#111A2B] to-[#1E112A] font-cairo relative overflow-hidden items-center pt-10 text-center">
+    <div className="flex flex-col min-h-screen bg-[#F9FAFB] font-ibm-plex-sans-arabic relative overflow-hidden items-center pt-10 text-center">
       
       {/* Logo Container */}
       <motion.div 
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-        className="bg-white rounded-[1.25rem] border-4 border-[#17C3B3] flex items-center justify-center relative z-10 px-3 py-1 overflow-hidden cursor-pointer"
+        className="bg-white rounded-[1.25rem] shadow-sm flex items-center justify-center relative z-10 px-3 py-1 overflow-hidden cursor-pointer"
       >
         <img 
           src="/lgoogg.jpeg" 
@@ -38,22 +31,21 @@ export default function Home() {
       <h1 className="text-[46px] font-bold mt-8 mb-4 z-10 relative leading-none">
         <DiaTextReveal 
           text="منصة مقصد" 
-          textColor="white" 
-          colors={["#ffffff", "#ffffff", "#ffffff"]} 
+          textColor="#6A2B92" 
+          colors={["#6A2B92"]} 
         />
       </h1>
       
       {/* Subtitle */}
-      <p className="text-purple-400 font-medium text-sm z-10 relative mb-8">
+      <p className="text-[#8c8c8c] font-medium text-sm z-10 relative mb-8">
         خيارك الأمثل للتطوير العقاري.
       </p>
 
-      {/* Image / Video Card */}
+      {/* Image / Video Card — hidden for now
       <div 
         className="relative w-[94vw] max-w-[460px] aspect-[4/5.2] rounded-3xl border-[2px] border-[#17C3B3] shadow-[0_0_30px_rgba(23,195,179,0.2)] overflow-hidden z-10 group mb-10"
       >
         <video 
-          ref={videoRef}
           src="/WhatsApp Video 2026-09-21 at 3.11.30 PM.mp4" 
           autoPlay 
           loop 
@@ -62,6 +54,7 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       </div>
+      */}
 
       {/* Buttons Section */}
       <div className="w-[94vw] max-w-[460px] flex flex-col gap-4 z-10 relative mb-6">
@@ -74,6 +67,24 @@ export default function Home() {
             icon: (
               <svg viewBox="0 0 512 512" width="28" height="28" fill="currentColor">
                 <path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64h185.4c2.2 20.4 3.3 41.8 3.3 64zm28.8-64h123.1c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0H18.6C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192H131.2c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6H344.3c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352H135.3zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6H493.4z"/>
+              </svg>
+            )
+          },
+          {
+            title: "قائمة الاهتمام",
+            subtitle: "سجّل بياناتك وسنتواصل معك قريباً",
+            color: "#6A2B92",
+            link: "#",
+            onClick: (e: React.MouseEvent) => {
+              e.preventDefault();
+              setIsInterestModalOpen(true);
+            },
+            icon: (
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <line x1="19" y1="8" x2="19" y2="14"/>
+                <line x1="22" y1="11" x2="16" y2="11"/>
               </svg>
             )
           },
@@ -138,16 +149,13 @@ export default function Home() {
             rel={item.link !== "#" ? "noopener noreferrer" : undefined}
             download={item.isDownload ? true : undefined}
             onClick={item.onClick}
-            initial={{ opacity: 0, y: 20 }}
+            initial="rest"
             animate="rest"
             whileHover="hover"
             whileTap="tap"
             variants={{
               rest: { 
-                opacity: 1, 
-                y: 0, 
                 scale: 1,
-                transition: { delay: 0.4 + (i * 0.1), type: "spring", stiffness: 300, damping: 20 }
               },
               hover: { 
                 scale: 1.02, 
@@ -155,7 +163,7 @@ export default function Home() {
               },
               tap: { scale: 0.98 }
             }}
-            className="flex items-center justify-between w-full bg-white/5 border border-white/5 backdrop-blur-md rounded-2xl p-4 cursor-pointer relative overflow-hidden"
+            className="flex items-center justify-between w-full bg-white border border-gray-200 shadow-sm rounded-2xl p-4 cursor-pointer relative overflow-hidden"
             dir="rtl"
           >
             {/* The Sweeping Background Fill */}
@@ -178,14 +186,14 @@ export default function Home() {
               <motion.div 
                 variants={{
                   rest: { 
-                    backgroundColor: "rgba(0,0,0,0)", 
+                    backgroundColor: `${item.color}14`, 
                     color: item.color, 
-                    borderColor: "rgba(255,255,255,0.1)",
+                    borderColor: `${item.color}33`,
                     rotate: 0
                   },
                   hover: { 
                     backgroundColor: "#ffffff", 
-                    color: item.color, // Inverts to teal icon on solid white block
+                    color: item.color,
                     borderColor: "rgba(255,255,255,0)",
                     rotate: -5
                   }
@@ -199,7 +207,7 @@ export default function Home() {
               <div className="text-right">
                 <motion.h3 
                   variants={{
-                    rest: { color: "#ffffff", x: 0 },
+                    rest: { color: "#0a0f1d", x: 0 },
                     hover: { color: "#ffffff", x: -2 }
                   }}
                   className="font-bold text-[17px] mb-0.5"
@@ -208,7 +216,7 @@ export default function Home() {
                 </motion.h3>
                 <motion.p 
                   variants={{
-                    rest: { color: "rgba(255,255,255,0.6)", x: 0 },
+                    rest: { color: "#8c8c8c", x: 0 },
                     hover: { color: "rgba(255,255,255,0.9)", x: -2 }
                   }}
                   className="text-[13px]"
@@ -275,22 +283,22 @@ export default function Home() {
                 opacity: 1, 
                 y: 0, 
                 scale: 1,
-                backgroundColor: "rgba(255,255,255,0.03)", 
-                borderColor: "rgba(23,195,179,0.3)", // Subtle Teal border
-                color: "#ffffff",
+                backgroundColor: "#ffffff", 
+                borderColor: "#e5e7eb",
+                color: "#6A2B92",
                 transition: { type: "spring", stiffness: 300, damping: 20 }
               },
               hover: { 
                 scale: 1.1, 
-                backgroundColor: "#17C3B3", // Solid Teal fill
+                backgroundColor: "#17C3B3",
                 borderColor: "#17C3B3",
-                color: "#ffffff", // Changed to white text/icon
+                color: "#ffffff",
                 y: -5,
                 transition: { type: "spring", stiffness: 400, damping: 25 }
               },
               tap: { scale: 0.9 }
             }}
-            className="w-[58px] h-[58px] rounded-full flex items-center justify-center border backdrop-blur-md shadow-lg"
+            className="w-[58px] h-[58px] rounded-full flex items-center justify-center border shadow-sm"
             aria-label={social.name}
           >
             {social.icon}
@@ -299,9 +307,14 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <div className="mt-6 mb-6 text-sm text-white/60 relative z-10 font-medium">
-        جميع الحقوق محفوظة &copy; <span className="text-purple-400 font-bold">منصة مقصد</span> 2026
+      <div className="mt-6 mb-6 text-sm text-[#8c8c8c] relative z-10 font-medium">
+        جميع الحقوق محفوظة &copy; <span className="text-[#6A2B92] font-bold">منصة مقصد</span> 2026
       </div>
+
+      <InterestListModal
+        open={isInterestModalOpen}
+        onClose={() => setIsInterestModalOpen(false)}
+      />
 
       <AnimatePresence>
         {isShareModalOpen && (
@@ -311,21 +324,21 @@ export default function Home() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsShareModalOpen(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
+              className="absolute inset-0 bg-[#0a0f1d]/50 backdrop-blur-sm cursor-pointer"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="bg-[#111A2B] border border-white/10 p-6 rounded-[2rem] w-full max-w-[320px] shadow-2xl flex flex-col gap-6 relative z-10"
+              className="bg-white border border-gray-200 p-6 rounded-[2rem] w-full max-w-[320px] shadow-2xl flex flex-col gap-6 relative z-10"
               dir="rtl"
             >
               <div className="flex items-center justify-between px-1">
-                <h3 className="text-xl font-bold text-white">مشاركة</h3>
+                <h3 className="text-xl font-bold text-[#6A2B92]">مشاركة</h3>
                 <button 
                   onClick={() => setIsShareModalOpen(false)}
-                  className="text-white/40 hover:text-white transition-colors"
+                  className="text-[#8c8c8c] hover:text-[#0a0f1d] transition-colors"
                 >
                   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
@@ -338,7 +351,7 @@ export default function Home() {
                     setIsCopied(true);
                     setTimeout(() => setIsCopied(false), 2000);
                   }}
-                  className="flex items-center justify-between w-full bg-white/5 hover:bg-white/10 transition-colors rounded-2xl p-4 text-white"
+                  className="flex items-center justify-between w-full bg-[#F9FAFB] hover:bg-gray-100 border border-gray-200 transition-colors rounded-2xl p-4 text-[#0a0f1d]"
                 >
                   <span className={`font-bold text-[17px] ${isCopied ? "text-[#17C3B3]" : ""}`}>
                     {isCopied ? "تم النسخ!" : "نسخ الرابط"}
@@ -359,7 +372,7 @@ export default function Home() {
                     window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
                     setIsShareModalOpen(false);
                   }}
-                  className="flex items-center justify-between w-full bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 transition-colors rounded-2xl p-4 text-white"
+                  className="flex items-center justify-between w-full bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 transition-colors rounded-2xl p-4 text-[#0a0f1d]"
                 >
                   <span className="font-bold text-[17px] text-[#25D366]">مشاركة عبر واتساب</span>
                   <svg viewBox="0 0 448 512" width="24" height="24" fill="#25D366">

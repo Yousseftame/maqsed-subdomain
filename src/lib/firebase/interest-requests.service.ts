@@ -4,7 +4,7 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase/firebase";
+import { getDb } from "@/lib/firebase/firebase";
 
 export type InterestRequestStatus =
   | "new"
@@ -36,6 +36,7 @@ const INTEREST_COLLECTION = "interest_requests";
 
 export const interestRequestsService = {
   async addInterestRequest(data: InterestRequestInput): Promise<void> {
+    const db = getDb();
     const docRef = doc(collection(db, INTEREST_COLLECTION));
     const now = serverTimestamp();
 

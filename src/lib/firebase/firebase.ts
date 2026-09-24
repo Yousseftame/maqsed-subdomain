@@ -1,5 +1,5 @@
-import { getApp, getApps, initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { type FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
+import { type Firestore, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,13 +11,26 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
-  throw new Error(
-    "Missing Firebase env vars. Copy .env.example to .env.local and restart the dev server."
-  );
+let app: FirebaseApp | undefined;
+let db: Firestore | undefined;
+
+function assertFirebaseConfig() {
+  if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+    throw new Error(
+      "Missing Firebase env vars. Add NEXT_PUBLIC_FIREBASE_* in Vercel Project Settings → Environment Variables (or .env.local locally), then redeploy."
+    );
+  }
 }
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+export function getFirebaseApp() {
+  if (app) return app;
+  assertFirebaseConfig();
+  app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  return app;
+}
 
-export const db = getFirestore(app);
-export { app };
+export function getDb() {
+  if (db) return db;
+  db = getFirestore(getFirebaseApp());
+  return db;
+}

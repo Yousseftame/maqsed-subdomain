@@ -1,16 +1,35 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DiaTextReveal } from "@/components/ui/dia-text-reveal";
 import { InterestListModal } from "@/components/InterestListModal";
 import { DirectContactModal } from "@/components/DirectContactModal";
+import { companySocialsService, type SubSiteSocials } from "@/lib/firebase/company.service";
 
 export default function Home() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isInterestModalOpen, setIsInterestModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [socials, setSocials] = useState<SubSiteSocials>({
+    instagram: "",
+    twitter: "",
+    snapchat: "",
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+    companySocialsService
+      .getSocials()
+      .then((next) => {
+        if (!cancelled) setSocials(next);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F9FAFB] font-ibm-plex-sans-arabic relative overflow-hidden items-center pt-10 text-center">
@@ -251,7 +270,7 @@ export default function Home() {
         {[
           {
             name: "Snapchat",
-            link: "#",
+            link: socials.snapchat,
             icon: (
               <svg viewBox="0 0 512 512" width="22" height="22" fill="currentColor">
                 <path d="M510.846 392.673c-5.211 12.157-27.239 21.089-67.36 27.318-2.064 2.786-3.775 14.686-6.507 23.956-1.625 5.566-5.623 8.869-12.128 8.869l-.297-.005c-9.395 0-19.203-4.323-38.852-4.323-26.521 0-35.662 6.043-56.254 20.588-21.832 15.438-42.771 28.764-74.027 27.399-31.646 2.334-58.025-16.908-72.871-27.404-20.714-14.643-29.828-20.582-56.241-20.582-18.864 0-30.736 4.72-38.852 4.72-8.073 0-11.213-4.922-12.422-9.04-2.703-9.189-4.404-21.263-6.523-24.13-20.679-3.209-67.31-11.344-68.498-32.15a10.627 10.627 0 0 1 8.877-11.069c69.583-11.455 100.924-82.901 102.227-85.934.074-.176.155-.344.237-.515 3.713-7.537 4.544-13.849 2.463-18.753-5.05-11.896-26.872-16.164-36.053-19.796-23.715-9.366-27.015-20.128-25.612-27.504 2.437-12.836 21.725-20.735 33.002-15.453 8.919 4.181 16.843 6.297 23.547 6.297 5.022 0 8.212-1.204 9.96-2.171-2.043-35.936-7.101-87.29 5.687-115.969C158.122 21.304 229.705 15.42 250.826 15.42c.944 0 9.141-.089 10.11-.089 52.148 0 102.254 26.78 126.723 81.643 12.777 28.65 7.749 79.792 5.695 116.009 1.582.872 4.357 1.942 8.599 2.139 6.397-.286 13.815-2.389 22.069-6.257 6.085-2.846 14.406-2.461 20.48.058l.029.01c9.476 3.385 15.439 10.215 15.589 17.87.184 9.747-8.522 18.165-25.878 25.018-2.118.835-4.694 1.655-7.434 2.525-9.797 3.106-24.6 7.805-28.616 17.271-2.079 4.904-1.256 11.211 2.46 18.748.087.168.166.342.239.515 1.301 3.03 32.615 74.46 102.23 85.934 6.427 1.058 11.163 7.877 7.725 15.859z"/>
@@ -260,7 +279,7 @@ export default function Home() {
           },
           {
             name: "X",
-            link: "#",
+            link: socials.twitter,
             icon: (
               <svg viewBox="0 0 512 512" width="22" height="22" fill="currentColor">
                 <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
@@ -269,17 +288,21 @@ export default function Home() {
           },
           {
             name: "Instagram",
-            link: "#",
+            link: socials.instagram,
             icon: (
               <svg viewBox="0 0 448 512" width="24" height="24" fill="currentColor">
                 <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
               </svg>
             )
           }
-        ].map((social, i) => (
+        ]
+          .filter((social) => social.link.startsWith("http"))
+          .map((social) => (
           <motion.a
-            key={i}
+            key={social.name}
             href={social.link}
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20, scale: 0.8 }}
             animate="rest"
             whileHover="hover"

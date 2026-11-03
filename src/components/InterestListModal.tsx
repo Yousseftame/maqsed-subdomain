@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { interestRequestsService } from "@/lib/firebase/interest-requests.service";
@@ -24,6 +25,7 @@ const fieldInputClass = `${inputClass} h-11`;
 const textareaClass = `${inputClass} min-h-[72px] resize-none py-2.5 leading-relaxed sm:min-h-[80px]`;
 
 export function InterestListModal({ open, onClose }: InterestListModalProps) {
+  const router = useRouter();
   const [form, setForm] = useState(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -79,9 +81,9 @@ export function InterestListModal({ open, onClose }: InterestListModalProps) {
         email,
         message,
       });
-      setIsSuccess(true);
       setForm(initialForm);
-      toast.success("تم تسجيل اهتمامك بنجاح");
+      onClose();
+      router.push("/thanks");
     } catch (err) {
       console.error("Error submitting interest request:", err);
       setError("حدث خطأ، حاول مرة أخرى");

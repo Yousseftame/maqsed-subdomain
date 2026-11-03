@@ -46,3 +46,23 @@ export const companySocialsService = {
     };
   },
 };
+
+
+const ABOUT_COLLECTION = "about";
+const ABOUT_DOC_ID = "main";
+export const DEFAULT_ABOUT_PDF = "/بروفايل مقصد V2.pdf";
+
+export const companyProfileService = {
+  async getProfilePdf(): Promise<string> {
+    try {
+      const snap = await getDoc(doc(getDb(), ABOUT_COLLECTION, ABOUT_DOC_ID));
+      if (!snap.exists()) return DEFAULT_ABOUT_PDF;
+      const data = snap.data() as Record<string, unknown>;
+      const pdf = String(data?.profilePdf || "").trim();
+      return pdf || DEFAULT_ABOUT_PDF;
+    } catch (err) {
+      console.error("Failed to fetch company profile PDF:", err);
+      return DEFAULT_ABOUT_PDF;
+    }
+  },
+};

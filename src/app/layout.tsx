@@ -19,13 +19,43 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://maqsed.sa"
+  ),
   title: "مقصد | MAQSED",
-  description: "منصة مقصد: خيارك الأمثل للتطوير العقاري! مع مقصد.. ننمو معاً",
-  keywords: ["مقصد", "تطوير عقاري", "MAQSED", "Real Estate Development", "عقارات"],
+  description:
+    "نقرأ السوق، نفهم مقصد العميل، ونُبرز قيمة المشروع، للعملاء والمستثمرين والمطورين. مقصد للتسويق والاستشارات العقارية.",
+  keywords: [
+    "مقصد",
+    "تطوير عقاري",
+    "MAQSED",
+    "Real Estate Development",
+    "عقارات",
+    "تسويق عقاري",
+    "استشارات عقارية",
+  ],
   openGraph: {
-    title: "مقصد | MAQSED",
-    description: "منصة مقصد: خيارك الأمثل للتطوير العقاري! مع مقصد.. ننمو معاً",
     type: "website",
+    locale: "ar_SA",
+    siteName: "مقصد | MAQSED",
+    title: "مقصد | MAQSED",
+    description:
+      "نقرأ السوق، نفهم مقصد العميل، ونُبرز قيمة المشروع، للعملاء والمستثمرين والمطورين. مقصد للتسويق والاستشارات العقارية.",
+    images: [
+      {
+        url: "/linksocial.jpeg",
+        width: 818,
+        height: 500,
+        alt: "مقصد | MAQSED",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "مقصد | MAQSED",
+    description:
+      "نقرأ السوق، نفهم مقصد العميل، ونُبرز قيمة المشروع، للعملاء والمستثمرين والمطورين. مقصد للتسويق والاستشارات العقارية.",
+    images: ["/linksocial.jpeg"],
   },
 };
 

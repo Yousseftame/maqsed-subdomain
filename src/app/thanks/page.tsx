@@ -77,7 +77,7 @@ export default function ThanksPage() {
           </Link>
 
           <a
-            href="https://maqsed.sa"
+            href="https://maqsad.sa/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 text-sm font-bold text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#6A2B92]"

@@ -18,10 +18,13 @@ const manrope = Manrope({
   subsets: ["latin"],
 });
 
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://maqsedsub.web.app"
+).replace(/\/$/, "");
+const OG_IMAGE_URL = `${SITE_URL}/linksocial.jpeg`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://maqsed.sa"
-  ),
+  metadataBase: new URL(SITE_URL),
   title: "مقصد | MAQSED",
   description:
     "نقرأ السوق، نفهم مقصد العميل، ونُبرز قيمة المشروع، للعملاء والمستثمرين والمطورين. مقصد للتسويق والاستشارات العقارية.",
@@ -43,9 +46,11 @@ export const metadata: Metadata = {
       "نقرأ السوق، نفهم مقصد العميل، ونُبرز قيمة المشروع، للعملاء والمستثمرين والمطورين. مقصد للتسويق والاستشارات العقارية.",
     images: [
       {
-        url: "/linksocial.jpeg",
+        url: OG_IMAGE_URL,
+        secureUrl: OG_IMAGE_URL,
         width: 818,
         height: 500,
+        type: "image/jpeg",
         alt: "مقصد | MAQSED",
       },
     ],
@@ -55,7 +60,7 @@ export const metadata: Metadata = {
     title: "مقصد | MAQSED",
     description:
       "نقرأ السوق، نفهم مقصد العميل، ونُبرز قيمة المشروع، للعملاء والمستثمرين والمطورين. مقصد للتسويق والاستشارات العقارية.",
-    images: ["/linksocial.jpeg"],
+    images: [OG_IMAGE_URL],
   },
 };
 
